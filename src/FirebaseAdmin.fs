@@ -1,5 +1,5 @@
 /// Fable bindings for the 'firebase-admin' npm package.
-module rec Fable.FirebaseAdmin
+namespace rec Fable.FirebaseAdmin
 
 open System
 open Fable.Core
@@ -14,9 +14,10 @@ open Fable.Import.JS
 type Agent = Fable.Import.Node.Http.Agent
 
 module Globals =
-
     /// Global import for the 'firebase-admin' module
-    let [<Import("*","firebase-admin")>] admin: IExports = jsNative
+    let [<Import("*","firebase-admin")>] admin: FirebaseAdmin.IExports = jsNative
+
+module FirebaseAdmin =
 
 //    let [<Import("credential","src/admin")>] credential: Credential.IExports = jsNative
 //    let [<Import("database","src/admin")>] database: Database.IExports = jsNative
@@ -24,16 +25,16 @@ module Globals =
 
     type [<AllowNullLiteral>] IExports =
         abstract SDK_VERSION: string
-        abstract apps: ResizeArray<Globals.App.App option>
-        abstract app: ?name: string -> Globals.App.App
-        abstract auth: ?app: Globals.App.App -> Globals.Auth.Auth
-        abstract database: ?app: Globals.App.App -> Globals.Database.Database
-        abstract messaging: ?app: Globals.App.App -> Globals.Messaging.Messaging
-//        abstract storage: ?app: Globals.App.App -> Globals.Storage.Storage
-//        abstract firestore: ?app: Globals.App.App -> Globals.Firestore.Firestore
-        abstract instanceId: ?app: Globals.App.App -> Globals.InstanceId.InstanceId
-        abstract projectManagement: ?app: Globals.App.App -> Globals.ProjectManagement.ProjectManagement
-        abstract initializeApp: ?options: Globals.AppOptions * ?name: string -> Globals.App.App
+        abstract apps: ResizeArray<FirebaseAdmin.App.App option>
+        abstract app: ?name: string -> FirebaseAdmin.App.App
+        abstract auth: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Auth.Auth
+        abstract database: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Database.Database
+        abstract messaging: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Messaging.Messaging
+//        abstract storage: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Storage.Storage
+//        abstract firestore: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Firestore.Firestore
+        abstract instanceId: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.InstanceId.InstanceId
+        abstract projectManagement: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.ProjectManagement.ProjectManagement
+        abstract initializeApp: ?options: FirebaseAdmin.AppOptions * ?name: string -> FirebaseAdmin.App.App
 
     type [<AllowNullLiteral>] FirebaseError =
         abstract code: string with get, set
@@ -55,7 +56,7 @@ module Globals =
         abstract expires_in: float with get, set
 
     type [<AllowNullLiteral>] AppOptions =
-        abstract credential: Globals.Credential.Credential option with get, set
+        abstract credential: FirebaseAdmin.Credential.Credential option with get, set
         abstract databaseAuthVariableOverride: Object option with get, set
         abstract databaseURL: string option with get, set
         abstract serviceAccountId: string option with get, set
@@ -67,14 +68,14 @@ module Globals =
 
         type [<AllowNullLiteral>] App =
             abstract name: string with get, set
-            abstract options: Globals.AppOptions with get, set
-            abstract auth: unit -> Globals.Auth.Auth
-            abstract database: ?url: string -> Globals.Database.Database
-//            abstract firestore: unit -> Globals.Firestore.Firestore
-            abstract instanceId: unit -> Globals.InstanceId.InstanceId
-            abstract messaging: unit -> Globals.Messaging.Messaging
-            abstract projectManagement: unit -> Globals.ProjectManagement.ProjectManagement
-//            abstract storage: unit -> Globals.Storage.Storage
+            abstract options: FirebaseAdmin.AppOptions with get, set
+            abstract auth: unit -> FirebaseAdmin.Auth.Auth
+            abstract database: ?url: string -> FirebaseAdmin.Database.Database
+//            abstract firestore: unit -> FirebaseAdmin.Firestore.Firestore
+            abstract instanceId: unit -> FirebaseAdmin.InstanceId.InstanceId
+            abstract messaging: unit -> FirebaseAdmin.Messaging.Messaging
+            abstract projectManagement: unit -> FirebaseAdmin.ProjectManagement.ProjectManagement
+//            abstract storage: unit -> FirebaseAdmin.Storage.Storage
             abstract delete: unit -> Promise<unit>
 
     module Auth =
@@ -101,8 +102,8 @@ module Globals =
             abstract phoneNumber: string option with get, set
             abstract photoURL: string option with get, set
             abstract disabled: bool with get, set
-            abstract metadata: Globals.Auth.UserMetadata with get, set
-            abstract providerData: ResizeArray<Globals.Auth.UserInfo> with get, set
+            abstract metadata: FirebaseAdmin.Auth.UserMetadata with get, set
+            abstract providerData: ResizeArray<FirebaseAdmin.Auth.UserInfo> with get, set
             abstract passwordHash: string option with get, set
             abstract passwordSalt: string option with get, set
             abstract customClaims: Object option with get, set
@@ -134,7 +135,7 @@ module Globals =
             [<Emit "$0[$1]{{=$2}}">] abstract Item: key: string -> obj option with get, set
 
         type [<AllowNullLiteral>] ListUsersResult =
-            abstract users: ResizeArray<Globals.Auth.UserRecord> with get, set
+            abstract users: ResizeArray<FirebaseAdmin.Auth.UserRecord> with get, set
             abstract pageToken: string option with get, set
 
         type [<StringEnum>] [<RequireQualifiedAccess>] HashAlgorithmType =
@@ -158,7 +159,7 @@ module Globals =
         type [<AllowNullLiteral>] UserImportResult =
             abstract failureCount: float with get, set
             abstract successCount: float with get, set
-            abstract errors: ResizeArray<Globals.FirebaseArrayIndexError> with get, set
+            abstract errors: ResizeArray<FirebaseAdmin.FirebaseArrayIndexError> with get, set
 
         type [<AllowNullLiteral>] UserImportRecord =
             abstract uid: string with get, set
@@ -186,26 +187,26 @@ module Globals =
 
         type [<AllowNullLiteral>] BaseAuth =
             abstract createCustomToken: uid: string * ?developerClaims: Object -> Promise<string>
-            abstract createUser: properties: Globals.Auth.CreateRequest -> Promise<Globals.Auth.UserRecord>
+            abstract createUser: properties: FirebaseAdmin.Auth.CreateRequest -> Promise<FirebaseAdmin.Auth.UserRecord>
             abstract deleteUser: uid: string -> Promise<unit>
-            abstract getUser: uid: string -> Promise<Globals.Auth.UserRecord>
-            abstract getUserByEmail: email: string -> Promise<Globals.Auth.UserRecord>
-            abstract getUserByPhoneNumber: phoneNumber: string -> Promise<Globals.Auth.UserRecord>
-            abstract listUsers: ?maxResults: float * ?pageToken: string -> Promise<Globals.Auth.ListUsersResult>
-            abstract updateUser: uid: string * properties: Globals.Auth.UpdateRequest -> Promise<Globals.Auth.UserRecord>
-            abstract verifyIdToken: idToken: string * ?checkRevoked: bool -> Promise<Globals.Auth.DecodedIdToken>
+            abstract getUser: uid: string -> Promise<FirebaseAdmin.Auth.UserRecord>
+            abstract getUserByEmail: email: string -> Promise<FirebaseAdmin.Auth.UserRecord>
+            abstract getUserByPhoneNumber: phoneNumber: string -> Promise<FirebaseAdmin.Auth.UserRecord>
+            abstract listUsers: ?maxResults: float * ?pageToken: string -> Promise<FirebaseAdmin.Auth.ListUsersResult>
+            abstract updateUser: uid: string * properties: FirebaseAdmin.Auth.UpdateRequest -> Promise<FirebaseAdmin.Auth.UserRecord>
+            abstract verifyIdToken: idToken: string * ?checkRevoked: bool -> Promise<FirebaseAdmin.Auth.DecodedIdToken>
             abstract setCustomUserClaims: uid: string * customUserClaims: Object -> Promise<unit>
             abstract revokeRefreshTokens: uid: string -> Promise<unit>
-            abstract importUsers: users: ResizeArray<Globals.Auth.UserImportRecord> * ?options: Globals.Auth.UserImportOptions -> Promise<Globals.Auth.UserImportResult>
-            abstract createSessionCookie: idToken: string * sessionCookieOptions: Globals.Auth.SessionCookieOptions -> Promise<string>
-            abstract verifySessionCookie: sessionCookie: string * ?checkForRevocation: bool -> Promise<Globals.Auth.DecodedIdToken>
-            abstract generatePasswordResetLink: email: string * ?actionCodeSettings: Globals.Auth.ActionCodeSettings -> Promise<string>
-            abstract generateEmailVerificationLink: email: string * ?actionCodeSettings: Globals.Auth.ActionCodeSettings -> Promise<string>
-            abstract generateSignInWithEmailLink: email: string * actionCodeSettings: Globals.Auth.ActionCodeSettings -> Promise<string>
+            abstract importUsers: users: ResizeArray<FirebaseAdmin.Auth.UserImportRecord> * ?options: FirebaseAdmin.Auth.UserImportOptions -> Promise<FirebaseAdmin.Auth.UserImportResult>
+            abstract createSessionCookie: idToken: string * sessionCookieOptions: FirebaseAdmin.Auth.SessionCookieOptions -> Promise<string>
+            abstract verifySessionCookie: sessionCookie: string * ?checkForRevocation: bool -> Promise<FirebaseAdmin.Auth.DecodedIdToken>
+            abstract generatePasswordResetLink: email: string * ?actionCodeSettings: FirebaseAdmin.Auth.ActionCodeSettings -> Promise<string>
+            abstract generateEmailVerificationLink: email: string * ?actionCodeSettings: FirebaseAdmin.Auth.ActionCodeSettings -> Promise<string>
+            abstract generateSignInWithEmailLink: email: string * actionCodeSettings: FirebaseAdmin.Auth.ActionCodeSettings -> Promise<string>
 
         type [<AllowNullLiteral>] Auth =
-            inherit Globals.Auth.BaseAuth
-            abstract app: Globals.App.App with get, set
+            inherit FirebaseAdmin.Auth.BaseAuth
+            abstract app: FirebaseAdmin.App.App with get, set
 
         type [<AllowNullLiteral>] TypeLiteral_03 =
             abstract algorithm: HashAlgorithmType with get, set
@@ -247,12 +248,12 @@ module Globals =
     module Credential =
 
         type [<AllowNullLiteral>] IExports =
-            abstract applicationDefault: ?httpAgent: Agent -> Globals.Credential.Credential
-            abstract cert: serviceAccountPathOrObject: U2<string, Globals.ServiceAccount> * ?httpAgent: Agent -> Globals.Credential.Credential
-            abstract refreshToken: refreshTokenPathOrObject: U2<string, Object> * ?httpAgent: Agent -> Globals.Credential.Credential
+            abstract applicationDefault: ?httpAgent: Agent -> FirebaseAdmin.Credential.Credential
+            abstract cert: serviceAccountPathOrObject: U2<string, FirebaseAdmin.ServiceAccount> * ?httpAgent: Agent -> FirebaseAdmin.Credential.Credential
+            abstract refreshToken: refreshTokenPathOrObject: U2<string, Object> * ?httpAgent: Agent -> FirebaseAdmin.Credential.Credential
 
         type [<AllowNullLiteral>] Credential =
-            abstract getAccessToken: unit -> Promise<Globals.GoogleOAuthAccessToken>
+            abstract getAccessToken: unit -> Promise<FirebaseAdmin.GoogleOAuthAccessToken>
 
     module Database =
 //        let [<Import("ServerValue","src/admin/database")>] serverValue: ServerValue.IExports = jsNative
@@ -261,19 +262,19 @@ module Globals =
             abstract enableLogging: ?logger: U2<bool, (string -> obj option)> * ?persistent: bool -> obj option
 
         type [<AllowNullLiteral>] Database =
-            abstract app: Globals.App.App with get, set
+            abstract app: FirebaseAdmin.App.App with get, set
             abstract goOffline: unit -> unit
             abstract goOnline: unit -> unit
-            abstract ref: ?path: U2<string, Globals.Database.Reference> -> Globals.Database.Reference
-            abstract refFromURL: url: string -> Globals.Database.Reference
+            abstract ref: ?path: U2<string, FirebaseAdmin.Database.Reference> -> FirebaseAdmin.Database.Reference
+            abstract refFromURL: url: string -> FirebaseAdmin.Database.Reference
 
         type [<AllowNullLiteral>] DataSnapshot =
             abstract key: string option with get, set
-            abstract ref: Globals.Database.Reference with get, set
-            abstract child: path: string -> Globals.Database.DataSnapshot
+            abstract ref: FirebaseAdmin.Database.Reference with get, set
+            abstract child: path: string -> FirebaseAdmin.Database.DataSnapshot
             abstract exists: unit -> bool
             abstract exportVal: unit -> obj option
-            abstract forEach: action: (Globals.Database.DataSnapshot -> U2<bool, unit>) -> bool
+            abstract forEach: action: (FirebaseAdmin.Database.DataSnapshot -> U2<bool, unit>) -> bool
             abstract getPriority: unit -> U2<string, float> option
             abstract hasChild: path: string -> bool
             abstract hasChildren: unit -> bool
@@ -296,41 +297,41 @@ module Globals =
             | Child_removed
 
         type [<AllowNullLiteral>] Query =
-            abstract ref: Globals.Database.Reference with get, set
-            abstract endAt: value: U3<float, string, bool> option * ?key: string -> Globals.Database.Query
-            abstract equalTo: value: U3<float, string, bool> option * ?key: string -> Globals.Database.Query
-            abstract isEqual: other: Globals.Database.Query option -> bool
-            abstract limitToFirst: limit: float -> Globals.Database.Query
-            abstract limitToLast: limit: float -> Globals.Database.Query
-            abstract off: ?eventType: Globals.Database.EventType * ?callback: (Globals.Database.DataSnapshot -> string -> obj option) * ?context: Object -> unit
-            abstract on: eventType: Globals.Database.EventType * callback: (Globals.Database.DataSnapshot option -> string -> obj option) * ?cancelCallbackOrContext: Object * ?context: Object -> (Globals.Database.DataSnapshot option -> string -> obj option)
-            abstract once: eventType: Globals.Database.EventType * ?successCallback: (Globals.Database.DataSnapshot -> string -> obj option) * ?failureCallbackOrContext: Object * ?context: Object -> Promise<Globals.Database.DataSnapshot>
-            abstract orderByChild: path: string -> Globals.Database.Query
-            abstract orderByKey: unit -> Globals.Database.Query
-            abstract orderByPriority: unit -> Globals.Database.Query
-            abstract orderByValue: unit -> Globals.Database.Query
-            abstract startAt: value: U3<float, string, bool> option * ?key: string -> Globals.Database.Query
+            abstract ref: FirebaseAdmin.Database.Reference with get, set
+            abstract endAt: value: U3<float, string, bool> option * ?key: string -> FirebaseAdmin.Database.Query
+            abstract equalTo: value: U3<float, string, bool> option * ?key: string -> FirebaseAdmin.Database.Query
+            abstract isEqual: other: FirebaseAdmin.Database.Query option -> bool
+            abstract limitToFirst: limit: float -> FirebaseAdmin.Database.Query
+            abstract limitToLast: limit: float -> FirebaseAdmin.Database.Query
+            abstract off: ?eventType: FirebaseAdmin.Database.EventType * ?callback: (FirebaseAdmin.Database.DataSnapshot -> string -> obj option) * ?context: Object -> unit
+            abstract on: eventType: FirebaseAdmin.Database.EventType * callback: (FirebaseAdmin.Database.DataSnapshot option -> string -> obj option) * ?cancelCallbackOrContext: Object * ?context: Object -> (FirebaseAdmin.Database.DataSnapshot option -> string -> obj option)
+            abstract once: eventType: FirebaseAdmin.Database.EventType * ?successCallback: (FirebaseAdmin.Database.DataSnapshot -> string -> obj option) * ?failureCallbackOrContext: Object * ?context: Object -> Promise<FirebaseAdmin.Database.DataSnapshot>
+            abstract orderByChild: path: string -> FirebaseAdmin.Database.Query
+            abstract orderByKey: unit -> FirebaseAdmin.Database.Query
+            abstract orderByPriority: unit -> FirebaseAdmin.Database.Query
+            abstract orderByValue: unit -> FirebaseAdmin.Database.Query
+            abstract startAt: value: U3<float, string, bool> option * ?key: string -> FirebaseAdmin.Database.Query
             abstract toJSON: unit -> Object
             abstract toString: unit -> string
 
         type [<AllowNullLiteral>] Reference =
-            inherit Globals.Database.Query
+            inherit FirebaseAdmin.Database.Query
             abstract key: string option with get, set
-            abstract parent: Globals.Database.Reference option with get, set
-            abstract root: Globals.Database.Reference with get, set
+            abstract parent: FirebaseAdmin.Database.Reference option with get, set
+            abstract root: FirebaseAdmin.Database.Reference with get, set
             abstract path: string with get, set
-            abstract child: path: string -> Globals.Database.Reference
-            abstract onDisconnect: unit -> Globals.Database.OnDisconnect
-            abstract push: ?value: obj * ?onComplete: (Error option -> obj option) -> Globals.Database.ThenableReference
+            abstract child: path: string -> FirebaseAdmin.Database.Reference
+            abstract onDisconnect: unit -> FirebaseAdmin.Database.OnDisconnect
+            abstract push: ?value: obj * ?onComplete: (Error option -> obj option) -> FirebaseAdmin.Database.ThenableReference
             abstract remove: ?onComplete: (Error option -> obj option) -> Promise<unit>
             abstract set: value: obj option * ?onComplete: (Error option -> obj option) -> Promise<unit>
             abstract setPriority: priority: U2<string, float> option * onComplete: (Error option -> obj option) -> Promise<unit>
             abstract setWithPriority: newVal: obj option * newPriority: U2<string, float> option * ?onComplete: (Error option -> obj option) -> Promise<unit>
-            abstract transaction: transactionUpdate: (obj option -> obj option) * ?onComplete: (Error option -> bool -> Globals.Database.DataSnapshot option -> obj option) * ?applyLocally: bool -> Promise<TypeLiteral_08>
+            abstract transaction: transactionUpdate: (obj option -> obj option) * ?onComplete: (Error option -> bool -> FirebaseAdmin.Database.DataSnapshot option -> obj option) * ?applyLocally: bool -> Promise<TypeLiteral_08>
             abstract update: values: Object * ?onComplete: (Error option -> obj option) -> Promise<unit>
 
         type [<AllowNullLiteral>] ThenableReference =
-            inherit Globals.Database.Reference
+            inherit FirebaseAdmin.Database.Reference
             inherit PromiseLike<obj option>
 
         module ServerValue =
@@ -340,7 +341,7 @@ module Globals =
 
         type [<AllowNullLiteral>] TypeLiteral_08 =
             abstract committed: bool with get, set
-            abstract snapshot: Globals.Database.DataSnapshot option with get, set
+            abstract snapshot: FirebaseAdmin.Database.DataSnapshot option with get, set
 
     module Messaging =
 
@@ -467,8 +468,8 @@ module Globals =
             [<Emit "$0[$1]{{=$2}}">] abstract Item: key: string -> string option with get, set
 
         type [<AllowNullLiteral>] MessagingPayload =
-            abstract data: Globals.Messaging.DataMessagePayload option with get, set
-            abstract notification: Globals.Messaging.NotificationMessagePayload option with get, set
+            abstract data: FirebaseAdmin.Messaging.DataMessagePayload option with get, set
+            abstract notification: FirebaseAdmin.Messaging.NotificationMessagePayload option with get, set
 
         type [<AllowNullLiteral>] MessagingOptions =
             abstract dryRun: bool option with get, set
@@ -481,7 +482,7 @@ module Globals =
             [<Emit "$0[$1]{{=$2}}">] abstract Item: key: string -> obj option option with get, set
 
         type [<AllowNullLiteral>] MessagingDeviceResult =
-            abstract error: Globals.FirebaseError option with get, set
+            abstract error: FirebaseAdmin.FirebaseError option with get, set
             abstract messageId: string option with get, set
             abstract canonicalRegistrationToken: string option with get, set
 
@@ -489,7 +490,7 @@ module Globals =
             abstract canonicalRegistrationTokenCount: float with get, set
             abstract failureCount: float with get, set
             abstract multicastId: float with get, set
-            abstract results: ResizeArray<Globals.Messaging.MessagingDeviceResult> with get, set
+            abstract results: ResizeArray<FirebaseAdmin.Messaging.MessagingDeviceResult> with get, set
             abstract successCount: float with get, set
 
         type [<AllowNullLiteral>] MessagingDeviceGroupResponse =
@@ -506,19 +507,19 @@ module Globals =
         type [<AllowNullLiteral>] MessagingTopicManagementResponse =
             abstract failureCount: float with get, set
             abstract successCount: float with get, set
-            abstract errors: ResizeArray<Globals.FirebaseArrayIndexError> with get, set
+            abstract errors: ResizeArray<FirebaseAdmin.FirebaseArrayIndexError> with get, set
 
         type [<AllowNullLiteral>] Messaging =
-            abstract app: Globals.App.App with get, set
-            abstract send: message: Globals.Messaging.Message * ?dryRun: bool -> Promise<string>
-            abstract sendToDevice: registrationToken: U2<string, ResizeArray<string>> * payload: Globals.Messaging.MessagingPayload * ?options: Globals.Messaging.MessagingOptions -> Promise<Globals.Messaging.MessagingDevicesResponse>
-            abstract sendToDeviceGroup: notificationKey: string * payload: Globals.Messaging.MessagingPayload * ?options: Globals.Messaging.MessagingOptions -> Promise<Globals.Messaging.MessagingDeviceGroupResponse>
-            abstract sendToTopic: topic: string * payload: Globals.Messaging.MessagingPayload * ?options: Globals.Messaging.MessagingOptions -> Promise<Globals.Messaging.MessagingTopicResponse>
-            abstract sendToCondition: condition: string * payload: Globals.Messaging.MessagingPayload * ?options: Globals.Messaging.MessagingOptions -> Promise<Globals.Messaging.MessagingConditionResponse>
-            abstract subscribeToTopic: registrationToken: string * topic: string -> Promise<Globals.Messaging.MessagingTopicManagementResponse>
-            abstract subscribeToTopic: registrationTokens: ResizeArray<string> * topic: string -> Promise<Globals.Messaging.MessagingTopicManagementResponse>
-            abstract unsubscribeFromTopic: registrationToken: string * topic: string -> Promise<Globals.Messaging.MessagingTopicManagementResponse>
-            abstract unsubscribeFromTopic: registrationTokens: ResizeArray<string> * topic: string -> Promise<Globals.Messaging.MessagingTopicManagementResponse>
+            abstract app: FirebaseAdmin.App.App with get, set
+            abstract send: message: FirebaseAdmin.Messaging.Message * ?dryRun: bool -> Promise<string>
+            abstract sendToDevice: registrationToken: U2<string, ResizeArray<string>> * payload: FirebaseAdmin.Messaging.MessagingPayload * ?options: FirebaseAdmin.Messaging.MessagingOptions -> Promise<FirebaseAdmin.Messaging.MessagingDevicesResponse>
+            abstract sendToDeviceGroup: notificationKey: string * payload: FirebaseAdmin.Messaging.MessagingPayload * ?options: FirebaseAdmin.Messaging.MessagingOptions -> Promise<FirebaseAdmin.Messaging.MessagingDeviceGroupResponse>
+            abstract sendToTopic: topic: string * payload: FirebaseAdmin.Messaging.MessagingPayload * ?options: FirebaseAdmin.Messaging.MessagingOptions -> Promise<FirebaseAdmin.Messaging.MessagingTopicResponse>
+            abstract sendToCondition: condition: string * payload: FirebaseAdmin.Messaging.MessagingPayload * ?options: FirebaseAdmin.Messaging.MessagingOptions -> Promise<FirebaseAdmin.Messaging.MessagingConditionResponse>
+            abstract subscribeToTopic: registrationToken: string * topic: string -> Promise<FirebaseAdmin.Messaging.MessagingTopicManagementResponse>
+            abstract subscribeToTopic: registrationTokens: ResizeArray<string> * topic: string -> Promise<FirebaseAdmin.Messaging.MessagingTopicManagementResponse>
+            abstract unsubscribeFromTopic: registrationToken: string * topic: string -> Promise<FirebaseAdmin.Messaging.MessagingTopicManagementResponse>
+            abstract unsubscribeFromTopic: registrationTokens: ResizeArray<string> * topic: string -> Promise<FirebaseAdmin.Messaging.MessagingTopicManagementResponse>
 
         type [<AllowNullLiteral>] TypeLiteral_10 =
             abstract action: string with get, set
@@ -531,13 +532,13 @@ module Globals =
 //    module Storage =
 //
 //        type [<AllowNullLiteral>] Storage =
-//            abstract app: Globals.App.App with get, set
+//            abstract app: FirebaseAdmin.App.App with get, set
 //            abstract bucket: ?name: string -> Bucket
 
     module InstanceId =
 
         type [<AllowNullLiteral>] InstanceId =
-            abstract app: Globals.App.App with get, set
+            abstract app: FirebaseAdmin.App.App with get, set
             abstract deleteInstanceId: instanceId: string -> Promise<unit>
 
     module ProjectManagement =
@@ -556,9 +557,9 @@ module Globals =
 
         type [<AllowNullLiteral>] AndroidApp =
             abstract appId: string with get, set
-            abstract getMetadata: unit -> Promise<Globals.ProjectManagement.AndroidAppMetadata>
+            abstract getMetadata: unit -> Promise<FirebaseAdmin.ProjectManagement.AndroidAppMetadata>
             abstract setDisplayName: newDisplayName: string -> Promise<unit>
-            abstract getShaCertificates: unit -> Promise<ResizeArray<Globals.ProjectManagement.ShaCertificate>>
+            abstract getShaCertificates: unit -> Promise<ResizeArray<FirebaseAdmin.ProjectManagement.ShaCertificate>>
             abstract addShaCertificate: certificateToAdd: ShaCertificate -> Promise<unit>
             abstract deleteShaCertificate: certificateToRemove: ShaCertificate -> Promise<unit>
             abstract getConfig: unit -> Promise<string>
@@ -572,26 +573,26 @@ module Globals =
 
         type [<AllowNullLiteral>] IosApp =
             abstract appId: string with get, set
-            abstract getMetadata: unit -> Promise<Globals.ProjectManagement.IosAppMetadata>
+            abstract getMetadata: unit -> Promise<FirebaseAdmin.ProjectManagement.IosAppMetadata>
             abstract setDisplayName: newDisplayName: string -> Promise<unit>
             abstract getConfig: unit -> Promise<string>
 
         type [<AllowNullLiteral>] ProjectManagement =
-            abstract app: Globals.App.App with get, set
-            abstract listAndroidApps: unit -> Promise<ResizeArray<Globals.ProjectManagement.AndroidApp>>
-            abstract listIosApps: unit -> Promise<ResizeArray<Globals.ProjectManagement.IosApp>>
-            abstract androidApp: appId: string -> Globals.ProjectManagement.AndroidApp
-            abstract iosApp: appId: string -> Globals.ProjectManagement.IosApp
-            abstract shaCertificate: shaHash: string -> Globals.ProjectManagement.ShaCertificate
-            abstract createAndroidApp: packageName: string * ?displayName: string -> Promise<Globals.ProjectManagement.AndroidApp>
-            abstract createIosApp: bundleId: string * ?displayName: string -> Promise<Globals.ProjectManagement.IosApp>
+            abstract app: FirebaseAdmin.App.App with get, set
+            abstract listAndroidApps: unit -> Promise<ResizeArray<FirebaseAdmin.ProjectManagement.AndroidApp>>
+            abstract listIosApps: unit -> Promise<ResizeArray<FirebaseAdmin.ProjectManagement.IosApp>>
+            abstract androidApp: appId: string -> FirebaseAdmin.ProjectManagement.AndroidApp
+            abstract iosApp: appId: string -> FirebaseAdmin.ProjectManagement.IosApp
+            abstract shaCertificate: shaHash: string -> FirebaseAdmin.ProjectManagement.ShaCertificate
+            abstract createAndroidApp: packageName: string * ?displayName: string -> Promise<FirebaseAdmin.ProjectManagement.AndroidApp>
+            abstract createIosApp: bundleId: string * ?displayName: string -> Promise<FirebaseAdmin.ProjectManagement.IosApp>
 
 type [<AllowNullLiteral>] BaseMessage =
     abstract data: TypeLiteral_11 option with get, set
-    abstract notification: Globals.Messaging.Notification option with get, set
-    abstract android: Globals.Messaging.AndroidConfig option with get, set
-    abstract webpush: Globals.Messaging.WebpushConfig option with get, set
-    abstract apns: Globals.Messaging.ApnsConfig option with get, set
+    abstract notification: FirebaseAdmin.Messaging.Notification option with get, set
+    abstract android: FirebaseAdmin.Messaging.AndroidConfig option with get, set
+    abstract webpush: FirebaseAdmin.Messaging.WebpushConfig option with get, set
+    abstract apns: FirebaseAdmin.Messaging.ApnsConfig option with get, set
 
 type [<AllowNullLiteral>] TokenMessage =
     inherit BaseMessage

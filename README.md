@@ -15,10 +15,10 @@ Stable | Prerelease
 ```
 module Example
 
-open Fable.FirebaseAdmin.Globals
+open Fable.FirebaseAdmin
 
 // Initialise the Firebase admin SDK
-admin.initializeApp()
+FirebaseAdmin.admin.initializeApp()
 |> ignore
 
 ```

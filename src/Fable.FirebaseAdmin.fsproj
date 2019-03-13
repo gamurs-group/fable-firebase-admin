@@ -14,10 +14,10 @@
         <PackageTags>F#, fsharp, fable2, fable-bindings, firebase, firebase-admin</PackageTags>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="FirebaseAdmin.fs" />
+        <Compile Include="FirebaseAdmin.fs"/>
     </ItemGroup>
     <ItemGroup>
-        <Content Include="*.fsproj; *.fs" PackagePath="fable\" />
+        <Content Include="*.fsproj; *.fs" PackagePath="fable\"/>
     </ItemGroup>
-    <Import Project="..\.paket\Paket.Restore.targets" />
+    <Import Project="..\.paket\Paket.Restore.targets"/>
 </Project>
