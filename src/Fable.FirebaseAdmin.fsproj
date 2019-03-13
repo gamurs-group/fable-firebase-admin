@@ -9,15 +9,15 @@
         <Description>Provides fable bindings for the Firebase admin SDK.</Description>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <Authors>Grant Neale</Authors>
-        <PackageLicenseUrl>https://github.com/grantneale/fable-firebase-admin/blob/master/LICENSE.md</PackageLicenseUrl>
-        <PackageProjectUrl>https://github.com/grantneale/fable-firebase-admin</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/gamurs-group/fable-firebase-admin/blob/master/LICENSE.md</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/gamurs-group/fable-firebase-admin</PackageProjectUrl>
         <PackageTags>F#, fsharp, fable2, fable-bindings, firebase, firebase-admin</PackageTags>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="FirebaseAdmin.fs" />
+        <Compile Include="FirebaseAdmin.fs"/>
     </ItemGroup>
     <ItemGroup>
-        <Content Include="*.fsproj; *.fs" PackagePath="fable\" />
+        <Content Include="*.fsproj; *.fs" PackagePath="fable\"/>
     </ItemGroup>
-    <Import Project="..\.paket\Paket.Restore.targets" />
+    <Import Project="..\.paket\Paket.Restore.targets"/>
 </Project>
