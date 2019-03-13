@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Version>0.0.0</Version>
+        <TargetFramework>netcoreapp2.0</TargetFramework>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup>
+        <Summary>Fable bindings for the firebase-admin npm packages.</Summary>
+        <Description>Provides fable bindings for the Firebase admin SDK.</Description>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <Authors>Grant Neale</Authors>
+        <PackageLicenseUrl>https://github.com/grantneale/fable-firebase-admin/blob/master/LICENSE.md</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/grantneale/fable-firebase-admin</PackageProjectUrl>
+        <PackageTags>F#, fsharp, fable2, fable-bindings, firebase, firebase-admin</PackageTags>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="FirebaseAdmin.fs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="*.fsproj; *.fs" PackagePath="fable\" />
+    </ItemGroup>
+    <Import Project="..\.paket\Paket.Restore.targets" />
+</Project>
