@@ -15,7 +15,7 @@ Stable | Prerelease
 ```
 module Example
 
-open Fable.FirebaseAdmin
+open Fable.FirebaseAdmin.Globals
 
 // Initialise the Firebase admin SDK
 FirebaseAdmin.admin.initializeApp()
