@@ -4,14 +4,7 @@ namespace rec Fable.FirebaseAdmin
 open System
 open Fable.Core
 open Fable.Import.JS
-
-// TODO bindings for these imports
-//module _firestore = @google_cloud_firestore
-//type Bucket = @google_cloud_storage.Bucket
-
-
-// TODO does this need to be imported/required?
-type Agent = Fable.Import.Node.Http.Agent
+open Fable.Import.GoogleCloud.Storage
 
 module Globals =
     /// Global import for the 'firebase-admin' module
@@ -22,6 +15,10 @@ module FirebaseAdmin =
 //    let [<Import("credential","src/admin")>] credential: Credential.IExports = jsNative
 //    let [<Import("database","src/admin")>] database: Database.IExports = jsNative
 
+    // TODO bindings for this import (and uncomment associated lines below
+    //module _firestore = @google_cloud_firestore
+
+    type Agent = Fable.Import.Node.Http.Agent
 
     type [<AllowNullLiteral>] IExports =
         abstract SDK_VERSION: string
@@ -30,7 +27,7 @@ module FirebaseAdmin =
         abstract auth: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Auth.Auth
         abstract database: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Database.Database
         abstract messaging: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Messaging.Messaging
-//        abstract storage: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Storage.Storage
+        abstract storage: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Storage.Storage
 //        abstract firestore: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Firestore.Firestore
         abstract instanceId: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.InstanceId.InstanceId
         abstract projectManagement: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.ProjectManagement.ProjectManagement
@@ -62,7 +59,7 @@ module FirebaseAdmin =
         abstract serviceAccountId: string option with get, set
         abstract storageBucket: string option with get, set
         abstract projectId: string option with get, set
-//        abstract httpAgent: Agent option with get, set
+        abstract httpAgent: Agent option with get, set
 
     module App =
 
@@ -75,7 +72,7 @@ module FirebaseAdmin =
             abstract instanceId: unit -> FirebaseAdmin.InstanceId.InstanceId
             abstract messaging: unit -> FirebaseAdmin.Messaging.Messaging
             abstract projectManagement: unit -> FirebaseAdmin.ProjectManagement.ProjectManagement
-//            abstract storage: unit -> FirebaseAdmin.Storage.Storage
+            abstract storage: unit -> FirebaseAdmin.Storage.Storage
             abstract delete: unit -> Promise<unit>
 
     module Auth =
@@ -529,11 +526,11 @@ module FirebaseAdmin =
         type [<AllowNullLiteral>] TypeLiteral_09 =
             [<Emit "$0[$1]{{=$2}}">] abstract Item: key: string -> string with get, set
 
-//    module Storage =
-//
-//        type [<AllowNullLiteral>] Storage =
-//            abstract app: FirebaseAdmin.App.App with get, set
-//            abstract bucket: ?name: string -> Bucket
+    module Storage =
+
+        type [<AllowNullLiteral>] Storage =
+            abstract app: FirebaseAdmin.App.App with get, set
+            abstract bucket: ?name: string -> Bucket
 
     module InstanceId =
 
@@ -587,24 +584,24 @@ module FirebaseAdmin =
             abstract createAndroidApp: packageName: string * ?displayName: string -> Promise<FirebaseAdmin.ProjectManagement.AndroidApp>
             abstract createIosApp: bundleId: string * ?displayName: string -> Promise<FirebaseAdmin.ProjectManagement.IosApp>
 
-type [<AllowNullLiteral>] BaseMessage =
-    abstract data: TypeLiteral_11 option with get, set
-    abstract notification: FirebaseAdmin.Messaging.Notification option with get, set
-    abstract android: FirebaseAdmin.Messaging.AndroidConfig option with get, set
-    abstract webpush: FirebaseAdmin.Messaging.WebpushConfig option with get, set
-    abstract apns: FirebaseAdmin.Messaging.ApnsConfig option with get, set
+    type [<AllowNullLiteral>] BaseMessage =
+        abstract data: TypeLiteral_11 option with get, set
+        abstract notification: FirebaseAdmin.Messaging.Notification option with get, set
+        abstract android: FirebaseAdmin.Messaging.AndroidConfig option with get, set
+        abstract webpush: FirebaseAdmin.Messaging.WebpushConfig option with get, set
+        abstract apns: FirebaseAdmin.Messaging.ApnsConfig option with get, set
 
-type [<AllowNullLiteral>] TokenMessage =
-    inherit BaseMessage
-    abstract token: string with get, set
+    type [<AllowNullLiteral>] TokenMessage =
+        inherit BaseMessage
+        abstract token: string with get, set
 
-type [<AllowNullLiteral>] TopicMessage =
-    inherit BaseMessage
-    abstract topic: string with get, set
+    type [<AllowNullLiteral>] TopicMessage =
+        inherit BaseMessage
+        abstract topic: string with get, set
 
-type [<AllowNullLiteral>] ConditionMessage =
-    inherit BaseMessage
-    abstract condition: string with get, set
+    type [<AllowNullLiteral>] ConditionMessage =
+        inherit BaseMessage
+        abstract condition: string with get, set
 
-type [<AllowNullLiteral>] TypeLiteral_11 =
-    [<Emit "$0[$1]{{=$2}}">] abstract Item: key: string -> string with get, set
+    type [<AllowNullLiteral>] TypeLiteral_11 =
+        [<Emit "$0[$1]{{=$2}}">] abstract Item: key: string -> string with get, set

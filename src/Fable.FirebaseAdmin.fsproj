@@ -14,10 +14,22 @@
         <PackageTags>F#, fsharp, fable2, fable-bindings, firebase, firebase-admin</PackageTags>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="FirebaseAdmin.fs"/>
+        <Compile Include="Duplexify\Duplexify.fs" />
+        <Compile Include="Caseless\Caseless.fs" />
+        <Compile Include="ToughCookie\ToughCookie.fs" />
+        <Compile Include="FormData\FormData.fs" />
+        <Compile Include="Request\Request.fs" />
+        <Compile Include="GoogleCloud.Common\CommonUtil.fs" />
+        <Compile Include="GoogleCloud.Common\Service.fs" />
+        <Compile Include="GoogleCloud.Common\ServiceObject.fs" />
+        <Compile Include="GoogleCloud.Common\Operation.fs" />
+        <Compile Include="GoogleCloud.Storage\Util.fs" />
+        <Compile Include="GoogleCloud.Storage\Acl.fs" />
+        <Compile Include="GoogleCloud.Storage\GoogleCloud.Storage.fs" />
+        <Compile Include="FirebaseAdmin.fs" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="*.fsproj; *.fs" PackagePath="fable\"/>
+        <Content Include="*.fsproj; *.fs" PackagePath="fable\" />
     </ItemGroup>
-    <Import Project="..\.paket\Paket.Restore.targets"/>
+    <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
