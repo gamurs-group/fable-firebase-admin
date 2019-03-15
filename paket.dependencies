@@ -3,6 +3,7 @@ content:none
 
 nuget Fable.Core
 nuget Fable.Import.Express
+nuget Fable.Import.GoogleCloud
 
 clitool dotnet-fable
 
