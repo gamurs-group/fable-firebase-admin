@@ -1,3 +1,6 @@
+#### 0.2.1
+* Upgrade to latest Fable GoogleCloud dependency.
+
 #### 0.2.0
 * Add support for the firebase storage admin API
 
