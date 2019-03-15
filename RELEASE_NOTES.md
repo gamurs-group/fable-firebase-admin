@@ -1,3 +1,6 @@
+#### 0.2.2
+* Upgrade to latest Fable GoogleCloud dependency.
+
 #### 0.2.1
 * Upgrade to latest Fable GoogleCloud dependency.
 
