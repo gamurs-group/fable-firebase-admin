@@ -15,7 +15,7 @@ NUGET
     Fable.Import.Express (0.1)
       Fable.Import.Node (>= 0.1) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
-    Fable.Import.GoogleCloud (0.1.1)
+    Fable.Import.GoogleCloud (0.2)
       Fable.Core (>= 2.0.3) - restriction: >= netcoreapp2.0
       Fable.Import.Node (>= 0.4.3) - restriction: >= netcoreapp2.0
     Fable.Import.Node (0.4.3) - restriction: >= netstandard1.6
