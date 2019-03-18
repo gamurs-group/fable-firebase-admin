@@ -1,3 +1,6 @@
+#### 0.3.0
+* Upgrade to latest Fable.Import.GoogleCloud to get single-element tuple bugfix.
+
 #### 0.2.2
 * Upgrade to latest Fable GoogleCloud dependency.
 
