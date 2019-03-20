@@ -25,6 +25,7 @@ module FirebaseAdmin =
         abstract apps: ResizeArray<FirebaseAdmin.App.App option>
         abstract app: ?name: string -> FirebaseAdmin.App.App
         abstract auth: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Auth.Auth
+        abstract credential: FirebaseAdmin.Credential.IExports
         abstract database: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Database.Database
         abstract messaging: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Messaging.Messaging
         abstract storage: ?app: FirebaseAdmin.App.App -> FirebaseAdmin.Storage.Storage
