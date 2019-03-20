@@ -1,3 +1,6 @@
+#### 0.4.0
+* Support for the admin credential API
+
 #### 0.3.0
 * Upgrade to latest Fable.Import.GoogleCloud to get single-element tuple bugfix.
 
