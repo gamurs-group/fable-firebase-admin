@@ -37,6 +37,13 @@ Make sure the following **requirements** are installed in your system:
 
 Then you just need to type `./build.cmd` or `./build.sh`
 
+To refer to your development copy from other projects before you release,
+first set up a local nuget repository, then push the .nupkg file into it.
+```
+nuget sources add -name Local -source Local
+nuget push -source Local src/bin/Release/*.nupkg
+```
+
 ### Release
 
 In order to push the package to [nuget.org](https://nuget.org) you need to add your API keys to `NUGET_KEY` environmental variable.
