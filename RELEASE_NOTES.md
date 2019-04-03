@@ -1,3 +1,6 @@
+#### 0.5.0
+* Support for Cloud Firestore API
+
 #### 0.4.0
 * Support for the admin credential API
 
