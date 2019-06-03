@@ -66,7 +66,7 @@ module FirebaseAdmin =
             abstract options: FirebaseAdmin.AppOptions with get, set
             abstract auth: unit -> FirebaseAdmin.Auth.Auth
             abstract database: ?url: string -> FirebaseAdmin.Database.Database
-//            abstract firestore: unit -> FirebaseAdmin.Firestore.Firestore
+            abstract firestore: unit -> FirebaseAdmin.Firestore.Firestore
             abstract instanceId: unit -> FirebaseAdmin.InstanceId.InstanceId
             abstract messaging: unit -> FirebaseAdmin.Messaging.Messaging
             abstract projectManagement: unit -> FirebaseAdmin.ProjectManagement.ProjectManagement

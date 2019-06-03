@@ -1,3 +1,6 @@
+#### 0.5.1
+* Expose Firestore API via the App object
+
 #### 0.5.0
 * Support for Cloud Firestore API
 
